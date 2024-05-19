@@ -9,6 +9,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <unordered_set>
 
 template<typename Vertex, typename Distance = double>
 class Graph
@@ -203,5 +204,27 @@ public:
 
 		std::reverse(path.begin(), path.end());
 		return path;
+	}
+	// обход 
+	std::vector<Vertex> walk(const Vertex& start_vertex) const
+	{
+		std::vector<Vertex> visited_vertices;
+		std::unordered_set<Vertex> visited_set;
+		walkDFS(start_vertex, visited_vertices, visited_set);
+		return visited_vertices;
+	}
+
+	void walkDFS(const Vertex& current_vertex, std::vector<Vertex>& visited_vertices, std::unordered_set<Vertex>& visited_set) const
+	{
+		visited_vertices.push_back(current_vertex);
+		visited_set.insert(current_vertex);
+
+		for (const auto& edge : _edges)
+		{
+			if (edge.source == current_vertex && visited_set.find(edge.destination) == visited_set.end())
+			{
+				walkDFS(edge.destination, visited_vertices, visited_set);
+			}
+		}
 	}
 }; 
