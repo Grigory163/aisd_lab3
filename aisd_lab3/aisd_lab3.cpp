@@ -7,6 +7,9 @@ using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
-	return 0;
+	Graph<int, int> a;
+	a.add_vertex(1);
+	std::cout << a.has_vertex(1);
+	auto b = a.vertices();
+	std::cout << b.capacity();
 }
